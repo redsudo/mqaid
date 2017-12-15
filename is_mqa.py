@@ -27,7 +27,7 @@ def peek(f, n):
     return r
 
 def main(path):
-        with open(path, 'rb') as f:
+        with open(str(path), 'rb') as f:
             magic = peek(f, 4)
 
             if magic == b'fLaC':

@@ -52,7 +52,7 @@ def main(path):
                 sound_data = wf.readframes(framerate)
 
         samples = list(iter_data(sound_data))
-        stream = Bits((x ^ y) >> 16 & 1
+        stream = Bits((x ^ y) >> 17 & 1
             for x, y in zip(samples[::2], samples[1::2]))
 
         if stream.find(MAGIC):

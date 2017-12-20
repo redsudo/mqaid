@@ -52,13 +52,14 @@ def main(path):
                 sound_data = wf.readframes(framerate)
 
         samples = list(iter_data(sound_data))
-        stream = Bits((x ^ y) >> 17 & 1
+        streams = (Bits((x ^ y) >> p & 1
             for x, y in zip(samples[::2], samples[1::2]))
+            for p in range(16, 24))
 
-        if stream.find(MAGIC):
+        if any(s.find(MAGIC) for s in streams):
             print('\x1b[1;31m MQA syncword present. [{}] \x1b[0m'.format(str(path)))
         else:
-            print('\x1b[1;32m Didn\'t find an MQA syncword. [{}] \x1b[0m'.format(str(path.parts[-1])))
+            print('\x1b[1;32m Didn\'t find an MQA syncword. [{}] \x1b[0m'.format(path.parts[-1]))
 
 if __name__ == '__main__':
     args = sys.argv[1:]
